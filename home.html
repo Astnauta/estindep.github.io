@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        /* Definindo o layout da tela */
+        .container {
+          display: flex;
+          height: 100vh; /* Ajuste a altura conforme necessário */
+        }
+    
+        /* Estilo da parte esquerda */
+        .left {
+          flex-basis: 50%; /* Divide a tela verticalmente */
+          background-color: #ccc;
+        }
+    
+        /* Estilo da parte direita */
+        .right {
+          flex-basis: 50%; /* Divide a tela verticalmente */
+          display: flex;
+          flex-direction: column;
+        }
+    
+        /* Estilo das 3 partes horizontais na parte direita */
+        .right .column {
+          flex-basis: 33.33%; /* Divide a parte direita em 3 colunas */
+          background-color: #eee;
+        }
+      </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h2>Bem-vindo(a)!</h2>
+            <button onclick="window.location.href = 'esportes.html'">Acessar notícias sobre esportes</button>
+            <br>
+            <button onclick="window.location.href = 'politica.html'">Acessar notícias sobre politica</button>
+            <br>
+            <button onclick="window.location.href = 'lazer.html'">Acessar notícias sobre lazer</button>
+            <br>
+            <input value="Logout" type="submit" onclick="Logout(); return false">
+        </div>
+        <div class="right">
+          <div class="column">
+            <h3>Últimos acessos:</h3>
+          </div>
+          <div class="column">
+            <p id="ultAcesso"></p>
+          </div>
+          <div class="column">
+            <p id="pnultAcesso"></p>
+          </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script>
+        var textUlt = "";
+        var textPnult = "";
+
+        function getUltPref() {
+            let ult = Cookies.get('ultimaBusca');
+
+            if (ult == 'esportes') {
+                textUlt = "Internacional em crise!!! Mano Menezes deve sair do clube em breve."
+            } else if (ult == 'lazer') {
+                textUlt = "Planeje suas férias conosco!"
+            } else if (ult == 'politica') {
+                textUlt = "Brasil de mal a pior, presidente se reúne com líderes mundiais!"
+            }
+
+            return textUlt;
+        }
+
+        function getPnultPref() {
+            let pnult = Cookies.get('penultBusca');
+
+            if (pnult == 'esportes') {
+                textPnult = "Internacional em crise!!! Mano Menezes deve sair do clube em breve."
+            } else if (pnult == 'lazer') {
+                textPnult = "Planeje suas férias conosco!"
+            } else if (pnult == 'politica') {
+                textPnult = "Brasil de mal a pior, presidente se reúne com líderes mundiais!"
+            }
+
+            return textPnult;
+        }
+
+
+        function isLogado() {
+            var usuarioLogado = sessionStorage.getItem('isLogado');
+
+            if (usuarioLogado != 1) {
+                window.location = "index.html"
+            }
+        }
+
+        function Logout() {
+            location.href = "index.html";
+            sessionStorage.setItem('isLogado', '0');
+        }
+
+
+
+        document.addEventListener("DOMContentLoaded", function(e) {
+            isLogado();
+            getUltPref();
+            getPnultPref();
+            document.getElementById('ultAcesso').innerText = textUlt;
+            document.getElementById('pnultAcesso').innerText = textPnult;
+        });
+    </script>
+</body>
+</html>
